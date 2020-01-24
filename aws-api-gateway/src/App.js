@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import {Dynamo} from './DynamoDB/Dynamo'
 import {Mysql} from './MySql/MySql'
 

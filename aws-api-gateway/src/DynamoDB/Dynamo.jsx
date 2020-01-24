@@ -1,23 +1,30 @@
 import React, {useState} from 'react'
 
 export function Dynamo (){
+    const [data, setData] = useState("")
+
+    function getData(data){
+        setData(data)
+    }
+
     return (<div>
         <h1>Dynamo Database</h1>
-        <Get />
-        <BatchGet />
-        <Put />
-        <Scan />
+        <Get getData={getData}/>
+        <BatchGet getData={getData}/>
+        <Scan getData={getData}/>
+        <Put getData={getData}/>
+        <p>{data}</p>
     </div>)
 }
 
-function BatchGet(){
+function BatchGet(props){
     function getBatch(e){
         fetch('https://slbtptu9k6.execute-api.us-east-1.amazonaws.com/Prod/dynamodb/batch')
         .then((response) => {
           return response.json();
         })
         .then((myJson) => {
-          console.log(myJson.Responses.students);
+          props.getData(JSON.stringify(myJson.Responses.students));
         });
     }
 
@@ -76,28 +83,28 @@ function Put(){
         </form>    
 }
 
-function Scan(){
+function Scan(props){
     function scanStudents(e){
         fetch('https://slbtptu9k6.execute-api.us-east-1.amazonaws.com/Prod/dynamodb/scan')
       .then((response) => {
         return response.json();
       })
       .then((myJson) => {
-        console.log(myJson.Items);
+        props.getData(JSON.stringify(myJson.Items));
       });
     }
     
     return <button onClick={scanStudents}>Scan</button>
 }
 
-function Get(){
+function Get(props){
     function getStudent(e){
         fetch('https://slbtptu9k6.execute-api.us-east-1.amazonaws.com/Prod/dynamodb')
       .then((response) => {
         return response.json();
       })
       .then((myJson) => {
-        console.log(myJson.Item);
+        props.getData(JSON.stringify(myJson.Item));
       });
     }
 

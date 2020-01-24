@@ -1,11 +1,18 @@
 import React, {useState} from 'react'
 
 export function Mysql (){
+    const [data, setData] = useState("")
+
+    function getData(data){
+        setData(data)
+    }
+
     return (<div>
         <h1>MySql Database</h1>
-        <Get />
-        <Put />
-        <Scan />
+        <Get getData={getData}/> 
+        <Scan getData={getData}/>
+        <Put getData={getData}/>
+        <p>{data}</p>
     </div>)
 }
 
@@ -55,28 +62,28 @@ function Put(){
         </form>    
 }
 
-function Scan(){
+function Scan(props){
     function scanStudents(e){
         fetch('https://slbtptu9k6.execute-api.us-east-1.amazonaws.com/Prod/mysql/scan')
       .then((response) => {
         return response.json();
       })
       .then((myJson) => {
-        console.log(myJson);
+        props.getData(JSON.stringify(myJson));
       });
     }
     
     return <button onClick={scanStudents}>Scan</button>
 }
 
-function Get(){
+function Get(props){
     function getStudent(e){
         fetch('https://slbtptu9k6.execute-api.us-east-1.amazonaws.com/Prod/mysql')
       .then((response) => {
         return response.json();
       })
       .then((myJson) => {
-        console.log(myJson);
+        props.getData(JSON.stringify(myJson));
       });
     }
 
