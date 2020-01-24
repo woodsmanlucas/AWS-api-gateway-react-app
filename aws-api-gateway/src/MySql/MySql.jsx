@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 export function Mysql (){
     return (<div>
-        <h1>Dynamo Database</h1>
+        <h1>MySql Database</h1>
         <Get />
         <Put />
         <Scan />
